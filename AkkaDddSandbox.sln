@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AkkaDddSandbox.App", "AkkaDddSandbox.App\AkkaDddSandbox.App.csproj", "{A16AA833-CA82-4540-B617-061CD12EB4D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AkkaDddSandbox.Core", "AkkaDddSandbox.Core\AkkaDddSandbox.Core.csproj", "{EBA5F2D0-DFBE-4434-99E0-4415CDD44222}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A16AA833-CA82-4540-B617-061CD12EB4D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A16AA833-CA82-4540-B617-061CD12EB4D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A16AA833-CA82-4540-B617-061CD12EB4D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A16AA833-CA82-4540-B617-061CD12EB4D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBA5F2D0-DFBE-4434-99E0-4415CDD44222}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBA5F2D0-DFBE-4434-99E0-4415CDD44222}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBA5F2D0-DFBE-4434-99E0-4415CDD44222}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBA5F2D0-DFBE-4434-99E0-4415CDD44222}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
