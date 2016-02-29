@@ -49,6 +49,14 @@ snapshot-store{
             // complex, multi aggregate root workflows?
             // containing domain model actor/caching or whatever ensures that aggregate roots are singletons
             // producing read models - how can a handler listen for the equivalent of aggregatemodified events?
+            // plumbing: config file, etc
+
+            // task rules:
+            // 1) a change is made that fires task rules - is this a domain event, a command, something else?
+            // 2) the actor sends a message to the sample line that the change has occurred (whats the mechanism for this?)
+
+
+            
         }
     }
 }

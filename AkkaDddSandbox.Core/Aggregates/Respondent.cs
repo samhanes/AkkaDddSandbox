@@ -1,4 +1,5 @@
-using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Akka;
 using AkkaDddSandbox.Core.Commands;
 using AkkaDddSandbox.Core.Events;
@@ -9,49 +10,44 @@ namespace AkkaDddSandbox.Core.Aggregates
 {
     public class Respondent : AggregateRoot<RespondentModel>
     {
-        public Respondent(string id) : base(id)
+        public Respondent(RespondentId id) : base(id)
         {
+            Id = id;
             State = null;
             
             Command<InitializeRespondent>(cmd =>
             {
-                if (Initialized)
-                    throw new Exception($"Respondent with id: {id} is already initialized!");
-                Emit(new RespondentInitialized(cmd.FirstName, cmd.LastName, cmd.TimeZone));
+                Emit(new RespondentInitialized(Id, cmd.FirstName, cmd.LastName, cmd.TimeZone));
+                Become(Initialized);
             });
+        }
 
-            Command<AskState>(msg =>
+        public RespondentId Id { get; }
+
+        private void Initialized()
+        {
+            Command<UpdateName>(cmd =>
             {
-                Sender.Tell(State, Self);
+                Emit(new RespondentNameUpdated(Id, cmd.FirstName, cmd.LastName));
             });
 
-            Command<UpdateName>(_ => Initialized,
-                cmd =>
-                {
-                    Emit(new NameUpdated(cmd.FirstName, cmd.LastName));
-                });
-
-            Command<UpdateTimeZone>(_ => Initialized,
-                cmd =>
-                {
-                    Emit(new TimeZoneUpdated(cmd.TimeZone));
-                });
+            Command<UpdateTimeZone>(cmd =>
+            {
+                Emit(new RespondentTimeZoneUpdated(Id, cmd.TimeZone));
+            });
         }
 
         public override void UpdateState(IDomainEvent domainEvent)
         {
             domainEvent.Match()
                 .With<RespondentInitialized>(
-                    ev => State = new RespondentModel(ev.FirstName, ev.LastName, ev.TimeZone, "Start"))
-                .With<NameUpdated>(
-                    ev =>
-                        State =
-                            new RespondentModel(ev.UpdatedFirst, ev.UpdatedLast, State.TimeZone, State.TaskRulesState))
-                .With<TimeZoneUpdated>(
-                    ev =>
-                        State =
-                            new RespondentModel(State.FirstName, State.LastName, ev.UpdatedTimeZone,
-                                State.TaskRulesState));
+                    ev => State =
+                            new RespondentModel(ev.FirstName, ev.LastName, ev.TimeZone, "Start",
+                                new ReadOnlyDictionary<TaskId, TaskModel>(new Dictionary<TaskId, TaskModel>()),
+                                new ReadOnlyDictionary<ProtocolEventId, ProtocolEventModel>(
+                                new Dictionary<ProtocolEventId, ProtocolEventModel>())))
+                .With<RespondentNameUpdated>(ev => State = State.With(firstName: ev.UpdatedFirst, lastName: ev.UpdatedLast))
+                .With<RespondentTimeZoneUpdated>(ev => State =State.With(timeZone: ev.UpdatedTimeZone));
         }
     }
 }

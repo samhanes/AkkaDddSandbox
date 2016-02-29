@@ -70,17 +70,26 @@
   <ItemGroup>
     <Compile Include="Aggregates\AggregateRoot.cs" />
     <Compile Include="Aggregates\Respondent.cs" />
+    <Compile Include="Aggregates\Task.cs" />
     <Compile Include="Commands\InitializeRespondent.cs" />
     <Compile Include="Commands\UpdateName.cs" />
-    <Compile Include="Commands\AskState.cs" />
+    <Compile Include="Commands\UpdateTaskStatus.cs" />
     <Compile Include="Commands\UpdateTimeZone.cs" />
-    <Compile Include="Events\NameUpdated.cs" />
+    <Compile Include="Events\RespondentNameUpdated.cs" />
     <Compile Include="Events\RespondentInitialized.cs" />
-    <Compile Include="Events\TimeZoneUpdated.cs" />
+    <Compile Include="Events\TaskStatusUpdated.cs" />
+    <Compile Include="Events\RespondentTimeZoneUpdated.cs" />
+    <Compile Include="Exceptions\AggregateRootNotInitializedException.cs" />
     <Compile Include="Interfaces\IDomainCommand.cs" />
     <Compile Include="Interfaces\IDomainEvent.cs" />
     <Compile Include="Interfaces\IDomainMessage.cs" />
+    <Compile Include="Models\AggregateId.cs" />
+    <Compile Include="Models\ProtocolEventId.cs" />
+    <Compile Include="Models\ProtocolEventModel.cs" />
+    <Compile Include="Models\RespondentId.cs" />
     <Compile Include="Models\RespondentModel.cs" />
+    <Compile Include="Models\TaskId.cs" />
+    <Compile Include="Models\TaskModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
