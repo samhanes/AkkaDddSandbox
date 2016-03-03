@@ -8,30 +8,38 @@ using AkkaDddSandbox.Core.Models;
 
 namespace AkkaDddSandbox.Core.Domain
 {
-    public class DomainModel : IDisposable
+    public interface IDomainModel : IDisposable
     {
-        private static IDictionary<Type, IActorRef> _aggregateDispatcherRegistry;
-        private static ActorSystem _system;
+        void Dispatch<T>(IDomainCommand<T> command) where T : AggregateRoot;
+    }
 
+    public class DomainModel : IDomainModel
+    {
+        private readonly IDictionary<Type, IActorRef> _aggregateDispatcherRegistry = new Dictionary<Type, IActorRef>();
+        private readonly ActorSystem _system;
+
+        public DomainModel(string name)
+        {
+            _system = ActorSystem.Create(name);
+        }
         public DomainModel(string name, Config config)
         {
-            _aggregateDispatcherRegistry = new Dictionary<Type, IActorRef>();
             _system = ActorSystem.Create(name, config);
         }
-
-        private AggregateRef AggregateOf<T>(AggregateId id) where T : AggregateRoot
-        {
-            if (!_aggregateDispatcherRegistry.ContainsKey(typeof (T)))
-                _aggregateDispatcherRegistry[typeof(T)] = _system.ActorOf(Props.Create<AggregateDispatcher<T>>(), typeof(T).FullName);
-
-            var cache = _aggregateDispatcherRegistry[typeof(T)];
-            return new AggregateRef(id, cache);
-        }
-
+        
         public void Dispatch<T>(IDomainCommand<T> command) where T : AggregateRoot
         {
             var aggregate = AggregateOf<T>(command.AggregateId);
             aggregate.Tell(command, null);
+        }
+
+        private AggregateRef AggregateOf<T>(AggregateId id) where T : AggregateRoot
+        {
+            if (!_aggregateDispatcherRegistry.ContainsKey(typeof(T)))
+                _aggregateDispatcherRegistry[typeof(T)] = _system.ActorOf(Props.Create<AggregateDispatcher<T>>(), typeof(T).FullName);
+
+            var cache = _aggregateDispatcherRegistry[typeof(T)];
+            return new AggregateRef(id, cache);
         }
 
         public void Dispose()

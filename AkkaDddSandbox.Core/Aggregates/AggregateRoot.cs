@@ -15,7 +15,7 @@ namespace AkkaDddSandbox.Core.Aggregates
     {
         const int SnapshotAfter = 3;
 
-        private int _eventCount = 0;
+        private long _eventCount = 0;
         private TState _state;
 
         protected AggregateRoot(AggregateId id)
@@ -29,9 +29,16 @@ namespace AkkaDddSandbox.Core.Aggregates
             });
             Recover((Action<IDomainEvent>) UpdateState);
         }
-
-        public override string PersistenceId { get; }
         
+        public override string PersistenceId { get; }
+
+        protected override void OnReplaySuccess()
+        {
+            base.OnReplaySuccess();
+            _eventCount = LastSequenceNr % SnapshotAfter;
+            Become(Initialized);
+        }
+
         protected TState State
         {
             get
@@ -42,7 +49,8 @@ namespace AkkaDddSandbox.Core.Aggregates
             set { _state = value; }
         }
 
-        public abstract void UpdateState(IDomainEvent domainEvent);
+        protected abstract void UpdateState(IDomainEvent domainEvent);
+        protected abstract void Initialized();
 
         protected void Emit<TEvent>(TEvent domainEvent, Action<TEvent> handler = null) where TEvent : IDomainEvent
         {
@@ -60,9 +68,7 @@ namespace AkkaDddSandbox.Core.Aggregates
         {
             _eventCount = (_eventCount + 1) % SnapshotAfter;
             if (_eventCount == 0)
-            {
                 SaveSnapshot(State);
-            }
         }
     }
 }

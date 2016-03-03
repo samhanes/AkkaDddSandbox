@@ -17,13 +17,15 @@ namespace AkkaDddSandbox.Core.Aggregates
             
             Command<InitializeRespondent>(cmd =>
             {
+                // todo: validate commands
                 Emit(new RespondentInitialized(Id, cmd.FirstName, cmd.LastName, cmd.TimeZone));
+                Become(Initialized);
             });
         }
 
-        public RespondentId Id { get; }
+        protected RespondentId Id { get; }
 
-        private void Initialized()
+        protected override void Initialized()
         {
             Command<UpdateName>(cmd =>
             {
@@ -36,7 +38,7 @@ namespace AkkaDddSandbox.Core.Aggregates
             });
         }
 
-        public override void UpdateState(IDomainEvent domainEvent)
+        protected override void UpdateState(IDomainEvent domainEvent)
         {
             domainEvent.Match()
                 .With<RespondentInitialized>(
@@ -47,7 +49,6 @@ namespace AkkaDddSandbox.Core.Aggregates
                                 new ReadOnlyDictionary<TaskId, TaskModel>(new Dictionary<TaskId, TaskModel>()),
                                 new ReadOnlyDictionary<ProtocolEventId, ProtocolEventModel>(
                                     new Dictionary<ProtocolEventId, ProtocolEventModel>()));
-                        Become(Initialized);    // todo: No - can't do this... in case of snapshot this will never fire
                     })
                 .With<RespondentNameUpdated>(
                     ev => State = State.With(firstName: ev.UpdatedFirst, lastName: ev.UpdatedLast))
