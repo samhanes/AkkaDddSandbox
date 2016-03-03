@@ -10,7 +10,8 @@ namespace AkkaDddSandbox.Core.Models
 
         public string RespondentId { get; }
         public string TaskDefinitionId { get; }
-        public override string ToPersistenceId()
+
+        public override string ToString()
         {
             return $"{RespondentId}:{TaskDefinitionId}";
         }

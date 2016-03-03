@@ -6,26 +6,21 @@ using AkkaDddSandbox.Core.Models;
 
 namespace AkkaDddSandbox.Core.Aggregates
 {
-    public abstract class AggregateRoot<TState> : ReceivePersistentActor
+    public abstract class AggregateRoot : ReceivePersistentActor
+    {
+
+    }
+
+    public abstract class AggregateRoot<TState> : AggregateRoot
     {
         const int SnapshotAfter = 3;
-
-        protected TState State
-        {
-            get
-            {
-                if (_state == null) throw new AggregateRootNotInitializedException();
-                return _state;
-            }
-            set { _state = value; }
-        }
 
         private int _eventCount = 0;
         private TState _state;
 
         protected AggregateRoot(AggregateId id)
         {
-            PersistenceId = id.ToPersistenceId();
+            PersistenceId = $"{GetType().FullName}:{id}";
 
             Recover<SnapshotOffer>(offer =>
             {
@@ -35,7 +30,17 @@ namespace AkkaDddSandbox.Core.Aggregates
             Recover((Action<IDomainEvent>) UpdateState);
         }
 
-        public sealed override string PersistenceId { get; }
+        public override string PersistenceId { get; }
+        
+        protected TState State
+        {
+            get
+            {
+                if (_state == null) throw new AggregateRootNotInitializedException();
+                return _state;
+            }
+            set { _state = value; }
+        }
 
         public abstract void UpdateState(IDomainEvent domainEvent);
 

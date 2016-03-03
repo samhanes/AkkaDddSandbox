@@ -3,6 +3,8 @@ using Akka.Actor;
 using Akka.Configuration;
 using AkkaDddSandbox.Core.Aggregates;
 using AkkaDddSandbox.Core.Commands;
+using AkkaDddSandbox.Core.Domain;
+using AkkaDddSandbox.Core.Models;
 
 namespace AkkaDddSandbox.App
 {
@@ -30,32 +32,19 @@ snapshot-store{
     }
   }
 }");
+            //var system = ActorSystem.Create("MySystem", config);
+            //var sl = system.ActorOf(Props.Create(() => new Respondent(new RespondentId("slId"))));
+            //sl.Tell(new InitializeRespondent(new RespondentId("slId"), "Sam", "Schmanes", "EST"));
 
-            var system = ActorSystem.Create("MySystem", config);
-            var sl = system.ActorOf(Props.Create(() => new Respondent("slId")));
-            //sl.Tell(new InitializeRespondent("Sam", "Schmanes", "EST"));
-
-            var state = sl.Ask(new AskState()).Result;
-
-            sl.Tell(new UpdateName("Joe", "Hanes"));
-            sl.Tell(new UpdateTimeZone("PST"));
-            sl.Tell(new UpdateName("Ben", "Hanes"));
-            //sl.Tell(new UpdateName("Sam", "Hanes"));
-            //sl.Tell(new AskState());
-
+            var model = new DomainModel("akkaDddSandbox", config);
+            //model.Dispatch(new InitializeRespondent(new RespondentId("sam"), "Sam", "Hanes", "EST"));
+            model.Dispatch(new UpdateName(new RespondentId("sam"),"Schmam", "Schmanes"));
+            
+            Console.WriteLine("Press a key to terminate...");
             Console.ReadKey();
 
-            // state machine in aggregate?
-            // complex, multi aggregate root workflows?
-            // containing domain model actor/caching or whatever ensures that aggregate roots are singletons
             // producing read models - how can a handler listen for the equivalent of aggregatemodified events?
             // plumbing: config file, etc
-
-            // task rules:
-            // 1) a change is made that fires task rules - is this a domain event, a command, something else?
-            // 2) the actor sends a message to the sample line that the change has occurred (whats the mechanism for this?)
-
-
             
         }
     }

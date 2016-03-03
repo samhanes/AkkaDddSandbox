@@ -9,7 +9,7 @@ namespace AkkaDddSandbox.Core.Models
 
         public string Id { get; }
 
-        public override string ToPersistenceId()
+        public override string ToString()
         {
             return Id;
         }

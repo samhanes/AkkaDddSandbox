@@ -11,7 +11,7 @@ namespace AkkaDddSandbox.Core.Models
 
         public Guid Id { get; }
 
-        public override string ToPersistenceId()
+        public override string ToString()
         {
             return Id.ToString();
         }

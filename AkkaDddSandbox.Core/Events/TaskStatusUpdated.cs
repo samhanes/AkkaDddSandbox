@@ -1,19 +1,16 @@
 using System;
-using AkkaDddSandbox.Core.Interfaces;
 using AkkaDddSandbox.Core.Models;
 
 namespace AkkaDddSandbox.Core.Events
 {
-    public class TaskStatusUpdated : IDomainEvent
+    public class TaskStatusUpdated : TaskEvent
     {
-        public TaskStatusUpdated(TaskId id, string newStatus, DateTime dateTimeUpdated)
+        public TaskStatusUpdated(TaskId id, string newStatus, DateTime dateTimeUpdated) : base(id)
         {
-            Id = id;
             NewStatus = newStatus;
             DateTimeUpdated = dateTimeUpdated;
         }
 
-        public TaskId Id { get; }
         public string NewStatus { get; }
         public DateTime DateTimeUpdated { get; }
     }

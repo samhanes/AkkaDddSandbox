@@ -75,8 +75,13 @@
     <Compile Include="Commands\UpdateName.cs" />
     <Compile Include="Commands\UpdateTaskStatus.cs" />
     <Compile Include="Commands\UpdateTimeZone.cs" />
+    <Compile Include="Domain\AggregateDispatcher.cs" />
+    <Compile Include="Domain\AggregateRef.cs" />
+    <Compile Include="Domain\AggregateMessage.cs" />
+    <Compile Include="Domain\DomainModel.cs" />
     <Compile Include="Events\RespondentNameUpdated.cs" />
     <Compile Include="Events\RespondentInitialized.cs" />
+    <Compile Include="Events\TaskEvent.cs" />
     <Compile Include="Events\TaskStatusUpdated.cs" />
     <Compile Include="Events\RespondentTimeZoneUpdated.cs" />
     <Compile Include="Exceptions\AggregateRootNotInitializedException.cs" />

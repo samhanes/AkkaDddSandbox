@@ -5,7 +5,7 @@ namespace AkkaDddSandbox.Core.Events
 {
     public class RespondentInitialized : IDomainEvent
     {
-        public RespondentInitialized(RespondentId id, string firstName, string lastName, string timeZone)
+        public RespondentInitialized(RespondentId id, string firstName, string lastName, string timeZone) 
         {
             Id = id;
             FirstName = firstName;

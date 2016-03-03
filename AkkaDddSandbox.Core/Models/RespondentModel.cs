@@ -28,7 +28,7 @@ namespace AkkaDddSandbox.Core.Models
         public ReadOnlyDictionary<ProtocolEventId, ProtocolEventModel> ProtocolEvents { get; }
         //public ReadOnlyCollection<Appointment> Appointments { get; }
         //public ReadOnlyCollection<Assignment> Assignments { get; }
-        //public ReadOnlyCollection<InstrumentDataModel> InstrumentDatas {get;}    
+        //public ReadOnlyCollection<InstrumentResultModel> InstrumentResults {get;}    
 
         public RespondentModel With(string firstName = null,
             string lastName = null,
