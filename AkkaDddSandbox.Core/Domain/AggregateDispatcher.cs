@@ -16,6 +16,7 @@ namespace AkkaDddSandbox.Core.Domain
             var aggregate = Context.Child(actorName);
             if (aggregate.IsNobody())
                 aggregate = Context.ActorOf(Props.Create(typeof(T), msg.Id), actorName);
+
             aggregate.Tell(msg.Message, msg.Sender);
         }
     }

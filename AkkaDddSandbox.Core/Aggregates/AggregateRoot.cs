@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Akka.Persistence;
 using AkkaDddSandbox.Core.Exceptions;
 using AkkaDddSandbox.Core.Interfaces;
@@ -6,10 +7,7 @@ using AkkaDddSandbox.Core.Models;
 
 namespace AkkaDddSandbox.Core.Aggregates
 {
-    public abstract class AggregateRoot : ReceivePersistentActor
-    {
-
-    }
+    public abstract class AggregateRoot : ReceivePersistentActor {}
 
     public abstract class AggregateRoot<TState> : AggregateRoot
     {
@@ -54,16 +52,23 @@ namespace AkkaDddSandbox.Core.Aggregates
 
         protected void Emit<TEvent>(TEvent domainEvent, Action<TEvent> handler = null) where TEvent : IDomainEvent
         {
-            Persist(domainEvent, e =>
-            {
-                UpdateState(e);
-                SaveSnapshotIfNecessary();
-                handler?.Invoke(e);
-
-                Context.System.EventStream.Publish(e);
-            });
+            Persist(domainEvent, e => OnEventPersisted(e, handler));
         }
-        
+
+        protected void Emit<TEvent>(IEnumerable<TEvent> domainEvents, Action<TEvent> handler = null) where TEvent : IDomainEvent
+        {
+            Persist(domainEvents, e => OnEventPersisted(e, handler));
+        }
+
+        private void OnEventPersisted<TEvent>(TEvent @event, Action<TEvent> handler) where TEvent : IDomainEvent
+        {
+            UpdateState(@event);
+            SaveSnapshotIfNecessary();
+
+            handler?.Invoke(@event);
+            Context.System.EventStream.Publish(@event);
+        }
+
         private void SaveSnapshotIfNecessary()
         {
             _eventCount = (_eventCount + 1) % SnapshotAfter;

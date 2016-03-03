@@ -79,6 +79,7 @@
     <Compile Include="Domain\AggregateRef.cs" />
     <Compile Include="Domain\AggregateMessage.cs" />
     <Compile Include="Domain\DomainModel.cs" />
+    <Compile Include="EventHandlers\EventHandler.cs" />
     <Compile Include="Events\RespondentNameUpdated.cs" />
     <Compile Include="Events\RespondentInitialized.cs" />
     <Compile Include="Events\TaskEvent.cs" />
