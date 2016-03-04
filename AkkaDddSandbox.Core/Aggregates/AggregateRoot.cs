@@ -11,7 +11,7 @@ namespace AkkaDddSandbox.Core.Aggregates
 
     public abstract class AggregateRoot<TState> : AggregateRoot
     {
-        const int SnapshotAfter = 3;
+        const int SnapshotAfter = 10;
 
         private long _eventCount = 0;
         private TState _state;

@@ -10,31 +10,31 @@ namespace AkkaDddSandbox.Core.Aggregates
 {
     public class Respondent : AggregateRoot<RespondentModel>
     {
+        private readonly RespondentId _id;
+
         public Respondent(RespondentId id) : base(id)
         {
-            Id = id;
+            _id = id;
             State = null;
             
             Command<InitializeRespondent>(cmd =>
             {
                 // todo: validate commands
-                Emit(new RespondentInitialized(Id, cmd.FirstName, cmd.LastName, cmd.TimeZone));
+                Emit(new RespondentInitialized(cmd.FirstName, cmd.LastName, cmd.TimeZone));
                 Become(Initialized);
             });
         }
-
-        protected RespondentId Id { get; }
 
         protected override void Initialized()
         {
             Command<UpdateName>(cmd =>
             {
-                Emit(new RespondentNameUpdated(Id, cmd.FirstName, cmd.LastName));
+                Emit(new RespondentNameUpdated(_id, cmd.FirstName, cmd.LastName));
             });
 
             Command<UpdateTimeZone>(cmd =>
             {
-                Emit(new RespondentTimeZoneUpdated(Id, cmd.TimeZone));
+                Emit(new RespondentTimeZoneUpdated(_id, cmd.TimeZone));
             });
         }
 
