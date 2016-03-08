@@ -1,18 +1,15 @@
-﻿using AkkaDddSandbox.Core.Interfaces;
-using AkkaDddSandbox.Core.Models;
+﻿using AkkaDddSandbox.Core.Models;
 
 namespace AkkaDddSandbox.Core.Events
 {
-    public class RespondentNameUpdated : IDomainEvent
+    public class RespondentNameUpdated : RespondentEvent
     {
-        public RespondentNameUpdated(RespondentId id, string updatedFirst, string updatedLast)
+        public RespondentNameUpdated(RespondentId id, string updatedFirst, string updatedLast) : base(id)
         {
             UpdatedFirst = updatedFirst;
             UpdatedLast = updatedLast;
-            Id = id;
         }
 
-        public RespondentId Id { get; }
         public string UpdatedFirst { get; }
         public string UpdatedLast { get; }
     }

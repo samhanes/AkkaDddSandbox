@@ -22,6 +22,7 @@ namespace AkkaDddSandbox.Core.Domain
         {
             _system = ActorSystem.Create(name);
         }
+
         public DomainModel(string name, Config config)
         {
             _system = ActorSystem.Create(name, config);
@@ -31,6 +32,11 @@ namespace AkkaDddSandbox.Core.Domain
         {
             var aggregate = AggregateOf<T>(command.AggregateId);
             aggregate.Tell(command, null);
+        }
+
+        public void RegisterHandler<T>() where T : ActorBase, new()
+        {
+            _system.ActorOf<T>();
         }
 
         private AggregateRef AggregateOf<T>(AggregateId id) where T : AggregateRoot

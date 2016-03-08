@@ -1,17 +1,14 @@
-﻿using AkkaDddSandbox.Core.Interfaces;
-using AkkaDddSandbox.Core.Models;
+﻿using AkkaDddSandbox.Core.Models;
 
 namespace AkkaDddSandbox.Core.Events
 {
-    public class RespondentTimeZoneUpdated : IDomainEvent
+    public class RespondentTimeZoneUpdated : RespondentEvent
     {
-        public RespondentTimeZoneUpdated(RespondentId id, string updatedTimeZone)
+        public RespondentTimeZoneUpdated(RespondentId id, string updatedTimeZone) : base(id)
         {
-            Id = id;
             UpdatedTimeZone = updatedTimeZone;
         }
 
-        public RespondentId Id { get; }
         public string UpdatedTimeZone { get; }
     }
 }

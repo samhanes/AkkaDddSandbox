@@ -73,7 +73,8 @@
     <Compile Include="Aggregates\Respondent.cs" />
     <Compile Include="Aggregates\Task.cs" />
     <Compile Include="Commands\AddRespondentToCohort.cs" />
-    <Compile Include="Commands\InitializeRespondent.cs" />
+    <Compile Include="Commands\CreateRespondent.cs" />
+    <Compile Include="Commands\CreateTask.cs" />
     <Compile Include="Commands\ReleaseCohort.cs" />
     <Compile Include="Commands\RemoveRespondentFromCohort.cs" />
     <Compile Include="Commands\UpdateName.cs" />
@@ -84,11 +85,14 @@
     <Compile Include="Domain\AggregateMessage.cs" />
     <Compile Include="Domain\DomainModel.cs" />
     <Compile Include="EventHandlers\EventHandler.cs" />
+    <Compile Include="Events\CohortCreated.cs" />
+    <Compile Include="Events\CohortEvent.cs" />
     <Compile Include="Events\CohortReleased.cs" />
     <Compile Include="Events\RespondentAddedToCohort.cs" />
     <Compile Include="Events\RespondentNameUpdated.cs" />
-    <Compile Include="Events\RespondentInitialized.cs" />
+    <Compile Include="Events\RespondentCreated.cs" />
     <Compile Include="Events\RespondentRemovedFromCohort.cs" />
+    <Compile Include="Events\TaskCreated.cs" />
     <Compile Include="Events\TaskEvent.cs" />
     <Compile Include="Events\TaskStatusUpdated.cs" />
     <Compile Include="Events\RespondentTimeZoneUpdated.cs" />

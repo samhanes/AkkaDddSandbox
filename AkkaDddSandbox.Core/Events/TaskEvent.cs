@@ -3,9 +3,9 @@ using AkkaDddSandbox.Core.Models;
 
 namespace AkkaDddSandbox.Core.Events
 {
-    public class TaskEvent : IDomainEvent
+    public abstract class TaskEvent : IDomainEvent
     {
-        public TaskEvent(TaskId id)
+        protected TaskEvent(TaskId id)
         {
             Id = id;
         }

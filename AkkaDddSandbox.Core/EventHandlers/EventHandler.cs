@@ -9,7 +9,7 @@ namespace AkkaDddSandbox.Core.EventHandlers
     {
         private static readonly ICollection<Type> EventTypesToHandle = new[]
         {
-            typeof (RespondentInitialized),
+            typeof (RespondentCreated),
             typeof (RespondentNameUpdated),
             typeof (RespondentTimeZoneUpdated)
         };
@@ -21,7 +21,7 @@ namespace AkkaDddSandbox.Core.EventHandlers
                 Context.System.EventStream.Subscribe(Self, type);
             }
 
-            Receive<RespondentInitialized>(msg =>
+            Receive<RespondentCreated>(msg =>
             {
                 
             });

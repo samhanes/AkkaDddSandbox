@@ -9,19 +9,24 @@ namespace AkkaDddSandbox.Core.Aggregates
 {
     public class Task : AggregateRoot<TaskModel>
     {
+        private readonly TaskId _id;
+
         public Task(TaskId id) : base(id)
         {
-            Id = id;
-            State = new TaskModel("Authorized", DateTime.UtcNow);
+            _id = id;
+            State = null;
 
-            Become(Initialized);
+            Command<TaskCreated>(cmd =>
+            {
+                Emit(new TaskCreated(_id, DateTime.UtcNow));
+                Become(Initialized);
+            });
         }
-
-        public TaskId Id { get; }
 
         protected override void UpdateState(IDomainEvent domainEvent)
         {
             domainEvent.Match()
+                .With<TaskCreated>(ev => State = new TaskModel("Authorized", ev.DateTimeCreated))
                 .With<TaskStatusUpdated>(ev => State = State.With(status: ev.NewStatus, dateTimeStatusSet: ev.DateTimeUpdated));
         }
 
@@ -29,7 +34,7 @@ namespace AkkaDddSandbox.Core.Aggregates
         {
             Command<UpdateTaskStatus>(cmd =>
             {
-                Emit(new TaskStatusUpdated(Id, cmd.NewStatus, DateTime.UtcNow));
+                Emit(new TaskStatusUpdated(_id, cmd.NewStatus, DateTime.UtcNow));
             });
         }
     }

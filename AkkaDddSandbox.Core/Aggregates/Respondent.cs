@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using Akka;
 using AkkaDddSandbox.Core.Commands;
 using AkkaDddSandbox.Core.Events;
@@ -17,10 +15,10 @@ namespace AkkaDddSandbox.Core.Aggregates
             _id = id;
             State = null;
             
-            Command<InitializeRespondent>(cmd =>
+            Command<CreateRespondent>(cmd =>
             {
                 // todo: validate commands
-                Emit(new RespondentInitialized(cmd.FirstName, cmd.LastName, cmd.TimeZone));
+                Emit(new RespondentCreated(_id, cmd.FirstName, cmd.LastName, cmd.TimeZone));
                 Become(Initialized);
             });
         }
@@ -41,17 +39,8 @@ namespace AkkaDddSandbox.Core.Aggregates
         protected override void UpdateState(IDomainEvent domainEvent)
         {
             domainEvent.Match()
-                .With<RespondentInitialized>(
-                    ev =>
-                    {
-                        State =
-                            new RespondentModel(ev.FirstName, ev.LastName, ev.TimeZone, "Start",
-                                new ReadOnlyDictionary<TaskId, TaskModel>(new Dictionary<TaskId, TaskModel>()),
-                                new ReadOnlyDictionary<ProtocolEventId, ProtocolEventModel>(
-                                    new Dictionary<ProtocolEventId, ProtocolEventModel>()));
-                    })
-                .With<RespondentNameUpdated>(
-                    ev => State = State.With(firstName: ev.UpdatedFirst, lastName: ev.UpdatedLast))
+                .With<RespondentCreated>(ev => State = new RespondentModel(ev.FirstName, ev.LastName, ev.TimeZone, "Start"))
+                .With<RespondentNameUpdated>(ev => State = State.With(firstName: ev.UpdatedFirst, lastName: ev.UpdatedLast))
                 .With<RespondentTimeZoneUpdated>(ev => State = State.With(timeZone: ev.UpdatedTimeZone));
         }
     }

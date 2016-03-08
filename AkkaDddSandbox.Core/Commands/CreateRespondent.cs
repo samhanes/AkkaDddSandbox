@@ -4,9 +4,9 @@ using AkkaDddSandbox.Core.Models;
 
 namespace AkkaDddSandbox.Core.Commands
 {
-    public class InitializeRespondent : IDomainCommand<Respondent>
+    public class CreateRespondent : IDomainCommand<Respondent>
     {
-        public InitializeRespondent(RespondentId id, string firstName, string lastName, string timeZone)
+        public CreateRespondent(RespondentId id, string firstName, string lastName, string timeZone)
         {
             AggregateId = id;
             FirstName = firstName;
