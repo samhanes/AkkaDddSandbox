@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using AkkaDddSandbox.Core.Commands;
 using AkkaDddSandbox.Core.Domain;
 using AkkaDddSandbox.Core.Models;
@@ -14,10 +15,14 @@ namespace AkkaDddSandbox.App
             var model = new DomainModel("akkaDddSandbox");
             model.RegisterHandler<RespondentInfoEventDispatcher>();
 
-            model.Dispatch(new CreateRespondent(new RespondentId("sam7"), "Sam", "Hanes", "EST"));
-            //model.Dispatch(new UpdateName(new RespondentId("sam6"),"Schmam", "Schmanes"));
-            //model.Dispatch(new UpdateTimeZone(new RespondentId("sam6"),"AST"));
-            
+            //model.Dispatch(new CreateRespondent(new RespondentId("sam20"), "Sam", "Hanes", "EST"));
+            //model.Dispatch(new UpdateName(new RespondentId("sam20"),"Schmam", "Schmanes"));
+            //model.Dispatch(new UpdateTimeZone(new RespondentId("sam20"),"AST"));
+            //model.Dispatch(new CreateTask(new TaskId("sam20", "doSurvey")));
+            //model.Dispatch(new UpdateTaskStatus(new TaskId("sam20", "doSurvey"), "Paused"));
+
+            Thread.Sleep(2000);
+
             var query = new RespondentInfoQuery();
             var results = query.All().ToList();
 

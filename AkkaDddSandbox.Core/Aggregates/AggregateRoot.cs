@@ -34,7 +34,8 @@ namespace AkkaDddSandbox.Core.Aggregates
         {
             base.OnReplaySuccess();
             _eventCount = LastSequenceNr % SnapshotAfter;
-            Become(Initialized);
+            if (_state != null)
+                Become(Initialized);
         }
 
         protected TState State

@@ -16,7 +16,7 @@ namespace AkkaDddSandbox.Core.Aggregates
             _id = id;
             State = null;
 
-            Command<TaskCreated>(cmd =>
+            Command<CreateTask>(cmd =>
             {
                 Emit(new TaskCreated(_id, DateTime.UtcNow));
                 Become(Initialized);

@@ -12,10 +12,10 @@ namespace AkkaDddSandbox.Read
 
         public RespondentInfoProjectionHandler(RespondentId id)
         {
-            var db = new MongoClient().GetDatabase("AkkaDdd.Read");
+            var db = new MongoClient().GetDatabase("AkkaDddRead");
             _collection = db.GetCollection<RespondentInfo>("respondentInfo");
 
-            _state = FetchFromDb() ?? new RespondentInfo { Id = id.Id };
+            _state = FetchFromDb(id) ?? new RespondentInfo { Id = id.Id };
             
             Receive<RespondentCreated>(msg =>
             {
@@ -72,14 +72,15 @@ namespace AkkaDddSandbox.Read
             });
         }
 
-        private RespondentInfo FetchFromDb()
+        private RespondentInfo FetchFromDb(RespondentId id)
         {
-            return _collection.Find(info => info.Id == _state.Id).FirstOrDefault();
+            return _collection.Find(info => info.Id == id.Id).FirstOrDefault();
         }
 
         private void Publish()
         {
-            _collection.ReplaceOne(info => info.Id == _state.Id, _state);
+            //_collection.InsertOne(_state);
+            var result = _collection.ReplaceOne(filter: info => info.Id == _state.Id, replacement: _state, options: new UpdateOptions { IsUpsert = true });
         }
     }
 }

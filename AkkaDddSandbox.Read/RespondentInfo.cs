@@ -17,8 +17,7 @@ namespace AkkaDddSandbox.Read
         public string LastName { get; set; }
         public string TimeZone { get; set; }
         public bool IsReleased { get; set; }
-        public int AuthorizedTasks => AuthorizedTaskDefinitionIds.Count;
-
+        
         public HashSet<string> AuthorizedTaskDefinitionIds { get; set; }
 
         public void AddAuthorizedTask(TaskId id)
@@ -42,7 +41,7 @@ namespace AkkaDddSandbox.Read
                 LastName = LastName,
                 TimeZone = TimeZone,
                 IsReleased = IsReleased,
-                AuthorizedTasks = AuthorizedTasks
+                AuthorizedTasks = AuthorizedTaskDefinitionIds.Count
             };
         }
     }

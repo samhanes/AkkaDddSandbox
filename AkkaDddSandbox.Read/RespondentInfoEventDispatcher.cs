@@ -1,4 +1,3 @@
-using System.Runtime.InteropServices;
 using Akka.Actor;
 using AkkaDddSandbox.Core.Events;
 using AkkaDddSandbox.Core.Interfaces;
@@ -10,10 +9,12 @@ namespace AkkaDddSandbox.Read
     {
         public RespondentInfoEventDispatcher()
         {
+            //Context.System.EventStream.Subscribe(Self, typeof (RespondentCreated));
             Context.System.EventStream.Subscribe(Self, typeof (RespondentEvent));
             Context.System.EventStream.Subscribe(Self, typeof (TaskEvent));
             Context.System.EventStream.Subscribe(Self, typeof (CohortEvent));
 
+            //Receive<RespondentCreated>(msg => ForwardToHandler(msg.Id, msg));
             Receive<RespondentEvent>(msg => ForwardToHandler(msg.Id, msg));
             Receive<TaskEvent>(msg => ForwardToHandler(new RespondentId(msg.Id.RespondentId), msg));
             Receive<RespondentAddedToCohort>(msg => ForwardToHandler(msg.RespondentId, msg));
