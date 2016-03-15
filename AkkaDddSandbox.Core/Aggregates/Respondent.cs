@@ -25,15 +25,8 @@ namespace AkkaDddSandbox.Core.Aggregates
 
         protected override void Initialized()
         {
-            Command<UpdateName>(cmd =>
-            {
-                Emit(new RespondentNameUpdated(_id, cmd.FirstName, cmd.LastName));
-            });
-
-            Command<UpdateTimeZone>(cmd =>
-            {
-                Emit(new RespondentTimeZoneUpdated(_id, cmd.TimeZone));
-            });
+            Command<UpdateName>(cmd => Emit(new RespondentNameUpdated(_id, cmd.FirstName, cmd.LastName)));
+            Command<UpdateTimeZone>(cmd => Emit(new RespondentTimeZoneUpdated(_id, cmd.TimeZone)));
         }
 
         protected override void UpdateState(IDomainEvent domainEvent)

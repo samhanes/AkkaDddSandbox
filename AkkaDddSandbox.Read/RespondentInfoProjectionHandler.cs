@@ -1,4 +1,7 @@
 using Akka.Actor;
+using Akka.Persistence;
+using Akka.Persistence.Sql.Common.Journal;
+using Akka.Persistence.Sql.Common.Queries;
 using AkkaDddSandbox.Core.Events;
 using AkkaDddSandbox.Core.Models;
 using MongoDB.Driver;
@@ -79,8 +82,33 @@ namespace AkkaDddSandbox.Read
 
         private void Publish()
         {
-            //_collection.InsertOne(_state);
-            var result = _collection.ReplaceOne(filter: info => info.Id == _state.Id, replacement: _state, options: new UpdateOptions { IsUpsert = true });
+            _collection.ReplaceOne(info => info.Id == _state.Id, _state, new UpdateOptions { IsUpsert = true });
         }
+    }
+
+    public class RespondentInfoRebuilder : ReceiveActor
+    {
+        private IActorRef _journal;
+
+        public RespondentInfoRebuilder()
+        {
+            var ext = Persistence.Instance.Apply(Context.System);
+            _journal = ext.JournalFor(null);
+
+            Receive<RebuildRespondentInfo>(msg =>
+            {
+                var query = new Query(new PersistenceIdRange());
+            });
+        }
+    }
+
+    public class RebuildRespondentInfo
+    {
+        public RebuildRespondentInfo(RespondentId id)
+        {
+            Id = id;
+        }
+
+        public RespondentId Id { get; }
     }
 }

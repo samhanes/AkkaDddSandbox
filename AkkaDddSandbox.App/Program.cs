@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using AkkaDddSandbox.Core.Commands;
 using AkkaDddSandbox.Core.Domain;
@@ -22,6 +23,8 @@ namespace AkkaDddSandbox.App
             //model.Dispatch(new UpdateTaskStatus(new TaskId("sam20", "doSurvey"), "Paused"));
 
             Thread.Sleep(2000);
+
+            
 
             var query = new RespondentInfoQuery();
             var results = query.All().ToList();
