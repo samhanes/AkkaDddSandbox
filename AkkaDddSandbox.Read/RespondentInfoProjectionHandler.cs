@@ -97,7 +97,7 @@ namespace AkkaDddSandbox.Read
 
             Receive<RebuildRespondentInfo>(msg =>
             {
-                var query = new Query(new PersistenceIdRange());
+                //var query = new Query(new PersistenceIdRange());
             });
         }
     }
