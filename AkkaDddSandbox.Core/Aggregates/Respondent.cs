@@ -6,7 +6,7 @@ using AkkaDddSandbox.Core.Models;
 
 namespace AkkaDddSandbox.Core.Aggregates
 {
-    public class Respondent : AggregateRoot<RespondentModel>
+    public class Respondent : AggregateRoot<RespondentModel>, ICommandHandler<RespondentCommand>
     {
         private readonly RespondentId _id;
 

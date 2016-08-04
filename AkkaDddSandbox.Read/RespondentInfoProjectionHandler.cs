@@ -1,7 +1,5 @@
 using Akka.Actor;
 using Akka.Persistence;
-using Akka.Persistence.Sql.Common.Journal;
-using Akka.Persistence.Sql.Common.Queries;
 using AkkaDddSandbox.Core.Events;
 using AkkaDddSandbox.Core.Models;
 using MongoDB.Driver;
@@ -97,7 +95,7 @@ namespace AkkaDddSandbox.Read
 
             Receive<RebuildRespondentInfo>(msg =>
             {
-                var query = new Query(new PersistenceIdRange());
+                //var query = new Query(new PersistenceIdRange());
             });
         }
     }

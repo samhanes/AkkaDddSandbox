@@ -1,16 +1,11 @@
-using AkkaDddSandbox.Core.Aggregates;
-using AkkaDddSandbox.Core.Interfaces;
 using AkkaDddSandbox.Core.Models;
 
 namespace AkkaDddSandbox.Core.Commands
 {
-    public class CreateTask : IDomainCommand<Task>
+    public class CreateTask : TaskCommand
     {
-        public CreateTask(TaskId aggregateId)
+        public CreateTask(TaskId id) : base(id)
         {
-            AggregateId = aggregateId;
         }
-
-        public AggregateId AggregateId { get; }
     }
 }

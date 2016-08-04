@@ -1,20 +1,17 @@
-using AkkaDddSandbox.Core.Aggregates;
-using AkkaDddSandbox.Core.Interfaces;
 using AkkaDddSandbox.Core.Models;
 
 namespace AkkaDddSandbox.Core.Commands
 {
-    public class CreateRespondent : IDomainCommand<Respondent>
+    public class CreateRespondent : RespondentCommand
     {
-        public CreateRespondent(RespondentId id, string firstName, string lastName, string timeZone)
+        public CreateRespondent(RespondentId id, string firstName, string lastName, string timeZone) 
+            : base(id)
         {
-            AggregateId = id;
             FirstName = firstName;
             LastName = lastName;
             TimeZone = timeZone;
         }
-
-        public AggregateId AggregateId { get; }
+        
         public string FirstName { get; }
         public string LastName { get; }
         public string TimeZone { get; }

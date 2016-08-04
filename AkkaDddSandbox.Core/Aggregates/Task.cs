@@ -7,7 +7,7 @@ using AkkaDddSandbox.Core.Models;
 
 namespace AkkaDddSandbox.Core.Aggregates
 {
-    public class Task : AggregateRoot<TaskModel>
+    public class Task : AggregateRoot<TaskModel>, ICommandHandler<TaskCommand>
     {
         private readonly TaskId _id;
 

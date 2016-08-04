@@ -1,18 +1,15 @@
-using AkkaDddSandbox.Core.Aggregates;
-using AkkaDddSandbox.Core.Interfaces;
 using AkkaDddSandbox.Core.Models;
 
 namespace AkkaDddSandbox.Core.Commands
 {
-    public class RemoveRespondentFromCohort : IDomainCommand<Cohort>
+    public class RemoveRespondentFromCohort : CohortCommand
     {
-        public RemoveRespondentFromCohort(CohortId aggregateId, RespondentId respondentId)
+        public RemoveRespondentFromCohort(CohortId id, RespondentId respondentId)
+            :base(id)
         {
-            AggregateId = aggregateId;
             RespondentId = respondentId;
         }
-
-        public AggregateId AggregateId { get; }
+        
         public RespondentId RespondentId { get; }
     }
 }

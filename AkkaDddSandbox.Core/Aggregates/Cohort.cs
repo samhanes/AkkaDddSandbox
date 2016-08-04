@@ -8,7 +8,7 @@ using AkkaDddSandbox.Core.Models;
 
 namespace AkkaDddSandbox.Core.Aggregates
 {
-    public class Cohort : AggregateRoot<CohortModel>
+    public class Cohort : AggregateRoot<CohortModel>, ICommandHandler<CohortCommand>
     {
         private readonly CohortId _id;
 

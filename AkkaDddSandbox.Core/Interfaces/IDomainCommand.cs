@@ -1,9 +1,8 @@
-using AkkaDddSandbox.Core.Aggregates;
 using AkkaDddSandbox.Core.Models;
 
 namespace AkkaDddSandbox.Core.Interfaces
 {
-    public interface IDomainCommand<T> : IDomainMessage where T : AggregateRoot
+    public interface IDomainCommand : IDomainMessage
     {
         AggregateId AggregateId { get; }
     }

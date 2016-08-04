@@ -1,16 +1,11 @@
-using AkkaDddSandbox.Core.Aggregates;
-using AkkaDddSandbox.Core.Interfaces;
 using AkkaDddSandbox.Core.Models;
 
 namespace AkkaDddSandbox.Core.Commands
 {
-    public class ReleaseCohort : IDomainCommand<Cohort>
+    public class ReleaseCohort : CohortCommand
     {
-        public ReleaseCohort(CohortId aggregateId)
+        public ReleaseCohort(CohortId id) : base(id)
         {
-            AggregateId = aggregateId;
         }
-
-        public AggregateId AggregateId { get; }
     }
 }
